@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { SERIES_BY_SLUG_QUERY } from "@/sanity/lib/queries";
-import { urlFor } from "@/sanity/lib/image";
+import { SanityImage, type SanityImageType } from "@/components/sanity-image";
 import { PortableText } from "next-sanity";
 import type { Metadata } from "next";
 
@@ -73,7 +72,7 @@ export default async function SeriesPage({ params }: Props) {
                 _id: string;
                 title: string;
                 slug: { current: string };
-                images: Array<{ asset: { _ref: string } }>;
+                images: SanityImageType[];
                 year?: number;
                 materials?: string;
               }) => (
@@ -84,12 +83,11 @@ export default async function SeriesPage({ params }: Props) {
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                     {sculpture.images?.[0] && (
-                      <Image
-                        src={urlFor(sculpture.images[0])
-                          .width(800)
-                          .height(1000)
-                          .url()}
+                      <SanityImage
+                        image={sculpture.images[0]}
                         alt={sculpture.title}
+                        width={800}
+                        height={1000}
                         fill
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
