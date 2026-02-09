@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { SCULPTURE_BY_SLUG_QUERY } from "@/sanity/lib/queries";
-import { urlFor } from "@/sanity/lib/image";
 import { PortableText } from "next-sanity";
 import type { Metadata } from "next";
 import { SculptureGallery } from "@/components/sculpture-gallery";
+import { type SanityImageType } from "@/components/sanity-image";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,8 +28,8 @@ export default async function SculpturePage({ params }: Props) {
   if (!sculpture) notFound();
 
   const images = (sculpture.images || []).map(
-    (img: unknown, index: number) => ({
-      url: urlFor(img).width(1200).height(1500).url(),
+    (img: SanityImageType, index: number) => ({
+      image: img,
       alt: `${sculpture.title} - Image ${index + 1}`,
     })
   );
