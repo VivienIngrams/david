@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
-import {
-  SITE_SETTINGS_QUERY,
-  ALL_SERIES_QUERY,
-} from "@/sanity/lib/queries";
+import { SITE_SETTINGS_QUERY, ALL_SERIES_QUERY } from "@/sanity/lib/queries";
 import { SeriesCard } from "@/components/series-card";
+import { SanityImageType } from "@/components/sanity-image";
 
 export default async function HomePage() {
   const [settings, allSeries] = await Promise.all([
@@ -41,7 +39,7 @@ export default async function HomePage() {
                 key={s._id as string}
                 title={s.title as string}
                 slug={s.slug as { current: string }}
-                coverImage={s.coverImage}
+                coverImage={s.coverImage as SanityImageType}
                 sculptureCount={s.sculptureCount as number}
               />
             ))}
