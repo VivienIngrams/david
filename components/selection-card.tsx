@@ -14,7 +14,7 @@ export function SelectionCard({ title, slug, coverImage }: SelectionCardProps) {
 
   return (
     <Link
-      href={`/works/${slug.current}`}
+      href={`/sculpture/${slug.current}`}
       className="group block space-y-3"
     >
       <div className="relative aspect-3/4 overflow-hidden bg-muted">
