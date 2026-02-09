@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
-  title: "David Heidelberger",
-  description: "Artiste sculpteur",
+  title: "David Heidelberger | Sculpteur",
+  description:
+    "Portfolio de David Heidelberger, artiste sculpteur. Sculptures contemporaines.",
 };
 
 export default function RootLayout({
@@ -23,10 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} `}
-      >
+    <html lang="fr">
+      <body className={`${inter.variable} ${playfair.variable}`}>
         {children}
       </body>
     </html>

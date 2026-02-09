@@ -1,9 +1,9 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
-
-import {authorType} from './authorType'
-
+import { siteSettings } from './siteSettings'
+import { series } from './series'
+import { sculpture } from './sculpture'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [ authorType],
+  types: [siteSettings, series, sculpture],
 }
