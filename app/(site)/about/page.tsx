@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "A propos | David Heidelberger",
   description: "Biographie de David Heidelberger, artiste sculpteur.",
 };
+type Exposition = {
+  year: string;
+  title: string;
+  location?: string;
+  details?: string;
+};
 
 export default async function AboutPage() {
   const settings = await client.fetch(SITE_SETTINGS_QUERY);
@@ -16,7 +22,7 @@ export default async function AboutPage() {
     <div>
       <section className="px-6 pb-24 pt-12 md:px-12 md:pt-20 lg:px-20">
         <h1 className="mb-12 font-serif text-3xl tracking-wide text-foreground md:mb-16 md:text-5xl">
-          A propos
+          Présentation et démarche artistique générale
         </h1>
 
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-20">
@@ -40,11 +46,11 @@ export default async function AboutPage() {
 
           {/* Bio */}
           <div className="lg:w-3/5">
-            {settings?.statement && (
+            {/* {settings?.statement && (
               <p className="mb-8 font-serif text-xl leading-relaxed text-foreground md:text-2xl">
                 {settings.statement}
               </p>
-            )}
+            )} */}
 
             {settings?.bio && (
               <div className="prose-muted max-w-none text-base leading-relaxed text-muted-foreground md:text-lg [&>p]:mb-4">
@@ -59,6 +65,26 @@ export default async function AboutPage() {
             )}
           </div>
         </div>
+
+        {/* Expositions */}
+        {settings?.expositions && settings.expositions.length > 0 && (
+          <div className="mt-20">
+            <h2 className="mb-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Expositions
+            </h2>
+            <ul className="space-y-4 text-sm text-muted-foreground">
+              {(settings.expositions as Exposition[]).map((expo) => (
+                <li key={expo.title + expo.year}>
+                  <strong>{expo.year}:</strong> {expo.title}
+                  {expo.location && <> — {expo.location}</>}
+                  {expo.details && (
+                    <div className="ml-2 text-xs">{expo.details}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Atelier images */}
         {settings?.atelierImages && settings.atelierImages.length > 0 && (
@@ -83,7 +109,7 @@ export default async function AboutPage() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
-                )
+                ),
               )}
             </div>
           </div>

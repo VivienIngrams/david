@@ -9,7 +9,8 @@ export const SITE_SETTINGS_QUERY = defineQuery(
     atelierImages,
     contactEmail,
     instagram,
-    location
+    location,
+    expositions
   }`
 );
 
@@ -60,3 +61,20 @@ export const SCULPTURE_BY_SLUG_QUERY = defineQuery(
     }
   }`
 );
+
+export const SELECTED_WORKS_QUERY = `
+  *[
+    _type == "sculpture" &&
+    !defined(series) &&
+    defined(slug) &&
+    defined(slug.current)
+  ]
+  | order(order asc, _createdAt desc) {
+    _id,
+    title,
+    slug,
+    "coverImage": images[0],
+    year
+  }
+`;
+

@@ -23,7 +23,6 @@ export const sculpture = defineType({
       title: 'Series',
       type: 'reference',
       to: [{ type: 'series' }],
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'images',

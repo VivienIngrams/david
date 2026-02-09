@@ -61,6 +61,46 @@ export const siteSettings = defineType({
       title: 'Location',
       type: 'string',
     }),
+    defineField({
+      name: 'expositions',
+      title: 'Expositions',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'year',
+              title: 'Year',
+              type: 'string', // or number if you prefer
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title / Event',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'location',
+              title: 'Location',
+              type: 'string',
+            }),
+            defineField({
+              name: 'details',
+              title: 'Details',
+              type: 'text',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'year',
+            },
+          },
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {

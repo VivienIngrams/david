@@ -48,7 +48,7 @@ export function SculptureGallery({
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              className={`relative h-20 w-20 flex-shrink-0 overflow-hidden transition-opacity ${
+              className={`relative h-20 w-20 shrink-0 overflow-hidden transition-opacity ${
                 idx === activeIndex
                   ? "opacity-100 ring-1 ring-foreground"
                   : "opacity-60 hover:opacity-80"

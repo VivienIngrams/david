@@ -2,24 +2,27 @@ import { client } from "@/sanity/lib/client";
 import {
   SITE_SETTINGS_QUERY,
   ALL_SERIES_QUERY,
+  SELECTED_WORKS_QUERY,
 } from "@/sanity/lib/queries";
 import { SeriesCard } from "@/components/series-card";
 import Link from "next/link";
 import { SanityImageType } from "@/components/sanity-image";
+import { SelectionCard } from "@/components/selection-card";
 
 export default async function HomePage() {
-  const [settings, allSeries] = await Promise.all([
+  const [settings, allSeries, selectedWorks] = await Promise.all([
     client.fetch(SITE_SETTINGS_QUERY),
     client.fetch(ALL_SERIES_QUERY),
+    client.fetch(SELECTED_WORKS_QUERY),
   ]);
 
   return (
     <div>
       {/* Hero section */}
-      <section className="px-6 pb-16 pt-12 md:px-12 md:pb-24 md:pt-20 lg:px-20">
-        <h1 className="max-w-3xl font-serif text-3xl leading-snug tracking-wide text-foreground md:text-5xl md:leading-snug">
+      <section className="px-6 pb-16 pt-12 md:px-12 md:pt-10 md:pb-20 lg:px-20">
+        {/* <h1 className="max-w-3xl font-serif text-3xl leadingtsnug tracking-wide text-foreground md:text-5xl md:leading-snug">
           {settings?.name || "David Heidelberger"}
-        </h1>
+        </h1> */}
         {settings?.statement && (
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             {settings.statement}
@@ -64,6 +67,33 @@ export default async function HomePage() {
               </span>
             </p>
           </div>
+        )}
+      </section>
+
+      {/* Selection grid */}
+      <section className="px-6 pb-24 md:px-12 lg:px-20">
+        <div className="mb-10 flex items-baseline justify-between border-b border-border pb-4">
+          <h2 className="text-xs tracking-[0.2em] uppercase text-muted-foreground">
+            Selection
+          </h2>
+        </div>
+
+        {selectedWorks && selectedWorks.length > 0 ? (
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 md:gap-8">
+            {selectedWorks.map((work: Record<string, unknown>) => (
+              <SelectionCard
+                key={work._id as string}
+                title={work.title as string}
+                slug={work.slug as { current: string }}
+                coverImage={work.coverImage as SanityImageType}
+               
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground">
+            Aucune œuvre sélectionnée pour le moment.
+          </p>
         )}
       </section>
     </div>
