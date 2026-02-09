@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import { SanityImage, type SanityImageType } from "@/components/sanity-image";
 
-interface GalleryImage {
-  url: string;
+interface GalleryItem {
+  image: SanityImageType;
   alt: string;
 }
 
@@ -12,7 +12,7 @@ export function SculptureGallery({
   images,
   title,
 }: {
-  images: GalleryImage[];
+  images: GalleryItem[];
   title: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,9 +29,11 @@ export function SculptureGallery({
     <div>
       {/* Main image */}
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-        <Image
-          src={images[activeIndex].url}
+        <SanityImage
+          image={images[activeIndex].image}
           alt={images[activeIndex].alt}
+          width={1200}
+          height={1500}
           fill
           className="object-cover"
           sizes="(max-width: 1024px) 100vw, 60vw"
@@ -53,9 +55,11 @@ export function SculptureGallery({
               }`}
               aria-label={`${title} - Image ${idx + 1}`}
             >
-              <Image
-                src={img.url}
+              <SanityImage
+                image={img.image}
                 alt={img.alt}
+                width={160}
+                height={160}
                 fill
                 className="object-cover"
                 sizes="80px"

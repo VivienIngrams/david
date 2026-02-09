@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
-import { urlFor } from "@/sanity/lib/image";
+import { SanityImage, type SanityImageType } from "@/components/sanity-image";
 import { PortableText } from "next-sanity";
 import type { Metadata } from "next";
 
@@ -25,12 +24,11 @@ export default async function AboutPage() {
           {settings?.portraitImage && (
             <div className="lg:w-2/5">
               <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                <Image
-                  src={urlFor(settings.portraitImage)
-                    .width(800)
-                    .height(1067)
-                    .url()}
+                <SanityImage
+                  image={settings.portraitImage}
                   alt={settings?.name || "Portrait de l'artiste"}
+                  width={800}
+                  height={1067}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -70,14 +68,16 @@ export default async function AboutPage() {
             </h2>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {settings.atelierImages.map(
-                (img: unknown, idx: number) => (
+                (img: SanityImageType, idx: number) => (
                   <div
                     key={idx}
                     className="relative aspect-[4/3] overflow-hidden bg-muted"
                   >
-                    <Image
-                      src={urlFor(img).width(800).height(600).url()}
+                    <SanityImage
+                      image={img}
                       alt={`Atelier - ${idx + 1}`}
+                      width={800}
+                      height={600}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

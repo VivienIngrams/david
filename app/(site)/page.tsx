@@ -4,6 +4,7 @@ import {
   ALL_SERIES_QUERY,
 } from "@/sanity/lib/queries";
 import { SeriesCard } from "@/components/series-card";
+import type { SanityImageType } from "@/components/sanity-image";
 
 export default async function HomePage() {
   const [settings, allSeries] = await Promise.all([
@@ -35,15 +36,23 @@ export default async function HomePage() {
 
         {allSeries && allSeries.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-10">
-            {allSeries.map((s: Record<string, unknown>) => (
-              <SeriesCard
-                key={s._id as string}
-                title={s.title as string}
-                slug={s.slug as { current: string }}
-                coverImage={s.coverImage}
-                sculptureCount={s.sculptureCount as number}
-              />
-            ))}
+            {allSeries.map(
+              (s: {
+                _id: string;
+                title: string;
+                slug: { current: string };
+                coverImage: SanityImageType;
+                sculptureCount: number;
+              }) => (
+                <SeriesCard
+                  key={s._id}
+                  title={s.title}
+                  slug={s.slug}
+                  coverImage={s.coverImage}
+                  sculptureCount={s.sculptureCount}
+                />
+              )
+            )}
           </div>
         ) : (
           <div className="flex min-h-[40vh] items-center justify-center">
